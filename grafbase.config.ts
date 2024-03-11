@@ -1,4 +1,7 @@
-import { g, auth, graph, config } from "@grafbase/sdk";
+import { auth, graph, config } from "@grafbase/sdk";
+
+const g = graph.Standalone();
+// @ts-ignore
 
 const User = g.model("User", {
   name: g.string().length({ min: 2, max: 20 }),
@@ -13,6 +16,8 @@ const User = g.model("User", {
     .optional(),
 });
 
+// @ts-ignore
+
 const Project = g.model("Project", {
   title: g.string().length({ min: 3 }),
   description: g.string(),
@@ -22,6 +27,5 @@ const Project = g.model("Project", {
   category: g.string().search(),
   createdBy: g.relation(() => User),
 });
-export default config({
-  schema: g,
-});
+
+export default config({ graph: g });
